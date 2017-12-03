@@ -1,10 +1,9 @@
 #!/bin/bash
-
 USERNAME="username"
 PASSWORD="password"
 HOSTNAME="dyndnsurl"
-UPDATEURL="dyn.truong.fi"
-IP=`curl -4 -s https://dyn.truong.fi/nic/checkip | grep -o '\([0-9]\{1,3\}\.\)\{3\}[0-9]\{1,3\}'`
+UPDATEURL="updateurl"
+IP=`curl -4 -s https://$UPDATEURL/nic/checkip | grep -o '\([0-9]\{1,3\}\.\)\{3\}[0-9]\{1,3\}'`
 
 ABUSE_LOCK_FILE="/tmp/dyndns.abuse"
 LAST_IP_FILE="/tmp/lastip"
@@ -19,7 +18,7 @@ fi
 
 if [ "$IP" != "$LAST_IP" ]; then
     echo "Current IP: $IP"
-    RESULT=`curl  "https://$USERNAME:$PASSWORD@UPDATEURL/nic/update?hostname=$HOSTNAME&myip=$IP" | grep -o -E  "good|nochg|abuse|badauth|notfqdn|nohost|abuse|dnserr"`
+    RESULT=`curl  "https://$USERNAME:$PASSWORD@$UPDATEURL/nic/update?hostname=$HOSTNAME&myip=$IP" | grep -o -E  "good|nochg|abuse|badauth|notfqdn|nohost|abuse|dnserr"`
     echo "DynDNS says: $RESULT!"
     echo $IP > "/tmp/lastip"
 else

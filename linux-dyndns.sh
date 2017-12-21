@@ -18,7 +18,7 @@ fi
 
 if [ "$IP" != "$LAST_IP" ]; then
     echo "Current IP: $IP"
-    RESULT=`curl  "https://$USERNAME:$PASSWORD@$UPDATEURL/nic/update?hostname=$HOSTNAME&myip=$IP" | grep -o -E  "good|nochg|abuse|badauth|notfqdn|nohost|abuse|dnserr"`
+    RESULT=`curl -4 "https://$USERNAME:$PASSWORD@$UPDATEURL/nic/update?hostname=$HOSTNAME&myip=$IP" | grep -o -E  "good|nochg|abuse|badauth|notfqdn|nohost|abuse|dnserr"`
     echo "DynDNS says: $RESULT!"
 	if [ "$RESULT" == "good" ]; then
 		echo $IP > "/tmp/lastip"

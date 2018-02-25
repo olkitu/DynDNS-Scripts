@@ -6,7 +6,6 @@ $updateurl = "updateurl"
 
 $pair = "$($user):$($pwd)"
 
-
 #Get your current IP-address.
 $url = "https://{0}/nic/checkip" -f $updateurl
 $MyIpPage = Invoke-WebRequest -Uri $url
